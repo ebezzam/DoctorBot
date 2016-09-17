@@ -130,12 +130,13 @@ def init_buttom_template(recipient_id):
                         'type': 'postback',
                         'title': 'Health alerts',
                         'payload': 'Which diseases and/or symptoms would you like to check in your local area?'
-                        },
-                        {
-                        'type': 'postback',
-                        'title': 'Get medical info',
-                        'payload': 'Which disease and/or symptoms would you like to know more about today?'
                         }
+                        # ,
+                        # {
+                        # 'type': 'web_url',
+                        # 'title': 'Get medical info',
+                        # 'url': 'www.google.com'
+                        # }
                     ]
                 }
             }
