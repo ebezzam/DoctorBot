@@ -3,6 +3,7 @@ import sys
 import json
 
 import requests
+import apiai
 import diagnose
 import sqlite3
 import urllib, json
@@ -105,26 +106,20 @@ def webhook():
 
 def apiai_analysis(message):
 
-    # headers["Authorization"] = "Bearer 31df623f4c1846209c287dc9e8f36a2e"
-    # url = "https://api.api.ai/v1/query="+message
-    # r = requests.get
+    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
+    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
 
-    # curl -H "Authorization: Bearer f2c3166a316843ca95e399a19333c873" 
+    request = ai.text_request()
 
+    request.lang = 'en'  # optional, default value equal 'en'
 
+    # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
 
-    # curl 'https://api.api.ai/api/query?v=20150910&query=I%20have%20a%20headache&
-    # lang=en&sessionId=83daf53e-1c3d-4330-9952-3d4a6d463457&timezone=2016-09-17T20:29:47+0200' 
-    # -H 'Authorization:Bearer 31df623f4c1846209c287dc9e8f36a2e'
-    
+    request.query = "I have a headache."
 
+    response = request.getresponse()
 
-
-    # r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
-    #     '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
-    #     +os.environ["PAGE_ACCESS_TOKEN"])
-
-    return message
+    return response
 
 
 def send_message(recipient_id, message_text):
