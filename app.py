@@ -41,19 +41,18 @@ def webhook():
 
                     response = None
                     try:   # reading message
-                        message_text == messaging_event["message"]["text"]  # the message's text
+                        message_text = messaging_event["message"]["text"]  # the message's text
                         response = diagnose.getResponse(message_text)
                     except:
                         pass
                     try:    # reading location
-                        location == messaging_event["message"]["payload"]["coordinates"]
+                        location = messaging_event["message"]["payload"]["coordinates"]
                         latitude = location["lat"]
                         longitude = location["long"]
                         response = "Location is: " + str(latitude) + ", " + str(longitude)
                     except:
                         pass
 
-                    print "Response is " + response
                     if response is not None:
                         send_message(sender_id, response)
 
