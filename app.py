@@ -82,6 +82,17 @@ def send_message(recipient_id, message_text):
         log(r.text)
 
 
+def send_buttom_template(recipient_id):
+
+    log("Sending button template to {recipient}.".format(recipient=recipient_id))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
     sys.stdout.flush()
