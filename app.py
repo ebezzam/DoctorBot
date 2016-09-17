@@ -48,8 +48,8 @@ def webhook():
                         message = message["text"]
                         if message == "Hi":
                             init_buttom_template(sender_id)
-                        else:
-                            message = apiai_analysis(message)
+                        # else:
+                        #     message = apiai_analysis(message)
 
                     elif message.get("attachments"):    # get attachment
                         attach = message["attachments"][0]  # loop over attachments?
