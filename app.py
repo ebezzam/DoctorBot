@@ -41,7 +41,7 @@ def webhook():
 
                     response = None
                     try:   # reading message
-                        message_text == messaging_event["message"]["text"]:  # the message's text
+                        message_text == messaging_event["message"]["text"]  # the message's text
                         response = diagnose.getResponse(message_text)
                     except:
                         pass
