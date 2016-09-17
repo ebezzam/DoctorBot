@@ -120,7 +120,7 @@ def send_buttom_template(recipient_id):
                     "buttons":[
                         {
                         "type":"web_url",
-                        "url":"https://www.google.com",
+                        "url":"http://lmgtfy.com/?q=Medical+Condition",
                         "title":"Show Website"
                         }
                     ]
