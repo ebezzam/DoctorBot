@@ -46,7 +46,7 @@ def webhook():
         for entry in data["entry"]:
             for messaging_event in entry["messaging"]:
 
-                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
+                if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
                     message = messaging_event["postback"]["payload"]
@@ -134,13 +134,8 @@ def api_ai_analysis(message):
 
     CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
     ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
-
     request = ai.text_request()
-
     request.lang = 'en'  # optional, default value equal 'en'
-
-    # request.session_id = "<SESSION ID, UNIQUE FOR EACH USER>"
-
     request.query = message
     response = request.getresponse()
     data = json.loads(response.read())
