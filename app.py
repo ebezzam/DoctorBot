@@ -46,7 +46,7 @@ def webhook():
                     message = messaging_event["message"]
                     if message.get("text"): # get message
                         message = message["text"]
-                        message = apiai_analysis(message)
+                        # message = apiai_analysis(message)
 
                     elif message.get("attachments"):    # get attachment
                         attach = message["attachments"][0]  # loop over attachments?
@@ -81,14 +81,14 @@ def webhook():
                         elif attach["type"] == "image":
                             image_url = attach["payload"]["url"]
                             message = "Image url: " + image_url
-                    response = diagnose.get_response(message)
+                    # response = diagnose.get_response(message)
 
                     if response is not None:
                         log(response)
                         if response == "Hi":
                             init_buttom_template(sender_id)
                         else:
-                            send_message(sender_id, response)
+                            send_message(sender_id, message)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
