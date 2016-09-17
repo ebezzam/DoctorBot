@@ -53,7 +53,6 @@ def webhook():
                             image_url = attach["payload"]["url"]
                             message = "Image url: " + image_url
                     response = diagnose.get_response(message)
-
                     if response is not None:
                         log(response)
                         if response == "Hi":
