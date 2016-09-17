@@ -155,7 +155,7 @@ def send_message(sender_id, message_text):
 def init_buttom_template(sender_id):
 
     # get user info
-    r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
+    r = requests.get('https://graph.facebook.com/v2.6/'+sender_id+
         '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
         +os.environ["PAGE_ACCESS_TOKEN"])
     try:
