@@ -6,8 +6,6 @@ import requests
 import diagnose
 import sqlite3
 import urllib, json
-
-# import facebook
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -105,13 +103,13 @@ def webhook():
 def send_message(recipient_id, message_text):
 
     # get user info
-    r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
-        '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
-        +os.environ["PAGE_ACCESS_TOKEN"])
-    first_name = str(r.json()["first_name"])
-    last_name = str(r.json()["last_name"])
-    gender = str(r.json()["gender"])
-    profile_pic = str(r.json()["profile_pic"])
+    # r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
+    #     '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
+    #     +os.environ["PAGE_ACCESS_TOKEN"])
+    # first_name = str(r.json()["first_name"])
+    # last_name = str(r.json()["last_name"])
+    # gender = str(r.json()["gender"])
+    # profile_pic = str(r.json()["profile_pic"])
 
     log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
