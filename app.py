@@ -86,7 +86,7 @@ def webhook():
                             message = "Image url: " + image_url
                     # response = diagnose.get_response(message)
 
-                    if message is not None and message is not "Hi":
+                    if message is not None and message != "Hi":
                         log(message)
                         send_message(sender_id, message)
 
@@ -106,20 +106,20 @@ def webhook():
 
 def apiai_analysis(message):
 
-    # CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
-    # ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
+    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
 
-    # request = ai.text_request()
+    request = ai.text_request()
 
-    # request.lang = 'en'  # optional, default value equal 'en'
+    request.lang = 'en'  # optional, default value equal 'en'
 
-    # # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
+    # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
 
-    # request.query = "I have a headache."
+    request.query = message
 
-    # response = request.getresponse()
+    response = request.getresponse()
 
-    return message
+    return response
 
 
 def send_message(recipient_id, message_text):
