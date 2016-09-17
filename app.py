@@ -39,7 +39,19 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
 
                     # sort different types of messages
+                    response = None
                     message = messaging_event["message"]
+                    if message.get("text"): # get message
+                        message = message["text"]
+                    elif message.get("attachments"):    # get attachment
+                        attach = message["attachments"][0]  # loop over attachments?
+                        if attach["type"] == "location":
+                            latitude = attach["payload"]["coordinates"]["lat"]
+                            longitude = attach["payload"]["coordinates"]["long"] 
+                            message = "Location: " + str(latitude) + ", " + str(longitude)  
+                        elif attach["type"] == "image":
+                            image_url = attach["payload"]["url"]
+                            message = "Image url: " + image_url
                     response = diagnose.get_response(message)                               
 
                     if response is not None:
