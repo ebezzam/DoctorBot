@@ -8,6 +8,8 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+currentState = 0
+
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -69,7 +71,16 @@ def webhook():
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]
-                    message = messaging_event["postback"]["payload"]
+                    if currentState == 0:
+                        if messaging_event["postback"]["payload"] == 1:
+                            message = 'What symptoms do you have?'
+                        elif messaging_event["postback"]["payload"] == 2:
+                            message = 'Which diseases and/or symptoms would you like to check in your local area?'
+                        elif messaging_event["postback"]["payload"] == 3:
+                            message = 'Which disease and/or symptoms would you like to know more about?'
+                        currentState = messaging_event["postback"]["payload"] + ' ' + str(currentState)
+                    else:
+                        message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
                     # send_message(sender_id, "What symptoms do you have?")
 
@@ -124,17 +135,17 @@ def init_buttom_template(recipient_id):
                         {
                         'type': 'postback',
                         'title': 'Symptom checker',
-                        'payload': 'What symptoms do you have?'
+                        'payload': 1
                         },
                         {
                         'type': 'postback',
                         'title': 'Health alerts',
-                        'payload': 'Which diseases and/or symptoms would you like to check in your local area?'
+                        'payload': 2
                         },
                         {
                         'type': 'postback',
                         'title': 'Get medical info',
-                        'payload': 'Which disease and/or symptoms would you like to know more about?'
+                        'payload': 3
                         }
                     ]
                 }
