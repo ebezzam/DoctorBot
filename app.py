@@ -61,8 +61,6 @@ def webhook():
                         log(response)
                         if response == "Hi":
                             init_buttom_template(sender_id)
-                        elif response == "Symptom checker":
-                            send_message(sender_id, "What symptoms do you have?")
                         else:
                             send_message(sender_id, response)
 
@@ -73,7 +71,7 @@ def webhook():
                     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    pass
+                    send_message(sender_id, "What symptoms do you have?")
 
     return "ok", 200
 
