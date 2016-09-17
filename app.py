@@ -57,7 +57,7 @@ def webhook():
                             latitude = attach["payload"]["coordinates"]["lat"]
                             longitude = attach["payload"]["coordinates"]["long"]
                             clinic_type = "hospital"
-                            clinicsURL = "https://api.foursquare.com/v2/venues/search?ll="+str(longitude)+","+str(latitude)+"&radius=15000&query="+clinic_type+"&client_id=1TCDH3ZYXC3NYNCRVL1RL4WEGDP4CHZSLPMKGCBIHAYYVJWA&client_secret=VASKTPATQLSPXIFJZQ0EZ4GDH2QAZU1QGEEZ4YDCKYA11V2J&v=20160917"
+                            clinicsURL = "https://api.foursquare.com/v2/venues/search?ll="+str(latitude)+","+str(longitude)+"&radius=15000&query="+clinic_type+"&client_id=1TCDH3ZYXC3NYNCRVL1RL4WEGDP4CHZSLPMKGCBIHAYYVJWA&client_secret=VASKTPATQLSPXIFJZQ0EZ4GDH2QAZU1QGEEZ4YDCKYA11V2J&v=20160917"
                             r = urllib.urlopen(clinicsURL)
                             data = json.loads(r.read())
                             hospitals = []
