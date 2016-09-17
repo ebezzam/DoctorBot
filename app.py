@@ -165,22 +165,22 @@ def init_buttom_template(recipient_id):
     try:
         first_name = str(r.json()["first_name"])
     except:
-        first_name = None
+        first_name = ""
     try:
         last_name = str(r.json()["last_name"])
     except:
-        last_name = None
+        last_name = ""
     try:
         gender = str(r.json()["gender"])
     except:
-        gender = None
+        gender = ""
     try:
         profile_pic = str(r.json()["profile_pic"])
     except:
-        profile_pic = None
+        profile_pic = ""
 
     welcome_message = "Hello! How may I help you?"
-    if gender is not None:
+    if gender is not "":
         if gender == 'male':
             welcome_message = "Hello Mr."+" "+first_name+" "+last_name + "! How may I help you?"
         else:
