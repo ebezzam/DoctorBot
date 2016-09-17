@@ -46,7 +46,7 @@ def webhook():
                     except:
                         pass
                     try:    # reading location
-                        location = messaging_event["message"]["payload"]["coordinates"]
+                        location = messaging_event["message"]["attachments"]["payload"]["coordinates"]
                         latitude = location["lat"]
                         longitude = location["long"]
                         response = "Location is: " + str(latitude) + ", " + str(longitude)
