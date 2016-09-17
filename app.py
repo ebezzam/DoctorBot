@@ -46,6 +46,8 @@ def webhook():
                         send_message(sender_id, "You're welcome!")
                     elif message_text == "Bye":
                         send_message(sender_id, "Bye! Feel better soon :)")
+                    elif message_text == "LauzHack":
+                        send_message(sender_id, "#HackTheAlps")
                     else:
                         send_message(sender_id, message_text)
 
