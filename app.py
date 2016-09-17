@@ -117,9 +117,9 @@ def apiai_analysis(message):
     # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
 
     request.query = message
-
     response = request.getresponse()
-
+    data = json.loads(response.read())
+    response = str(data["result"]["fulfillment"]["speech"])
     return response
 
 
