@@ -65,7 +65,7 @@ def webhook():
                             if message == "Hi":
                                 init_buttom_template(sender_id)
                             else:
-                                send_message(sender_id, message) "Say 'Hi' to the DoctorBot to get started!")
+                                send_message(sender_id, "Say 'Hi' to the DoctorBot to get started!")
 
                     elif message.get("attachments"):    # get attachment
                         attach = message["attachments"][0]  # loop over attachments?
