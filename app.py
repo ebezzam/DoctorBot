@@ -143,6 +143,8 @@ def init_buttom_template(recipient_id):
         log(r.status_code)
         log(r.text)
 
+    log(r.status_code)
+
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
