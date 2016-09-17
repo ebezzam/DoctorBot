@@ -129,12 +129,12 @@ def init_buttom_template(recipient_id):
                         {
                         'type': 'postback',
                         'title': 'Health alerts',
-                        'payload': 'Which diseases/symptoms would you like to check in your local area?'
+                        'payload': 'Which diseases and/or symptoms would you like to check in your local area?'
                         },
                         {
                         'type': 'postback',
                         'title': 'Get medical info',
-                        'payload': 'Which disease/symptoms would you like to know more about?'
+                        'payload': 'Which disease and/or symptoms would you like to know more about?'
                         }
                     ]
                 }
