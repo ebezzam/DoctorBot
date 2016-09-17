@@ -40,14 +40,20 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
 
                     response = None
-                    if messaging_event["message"]["text"]:  # if text
+                    try: #if text
+                    # if messaging_event["message"]["text"]:  # if text
                         message_text = messaging_event["message"]["text"]
                         response = diagnose.getResponse(message_text)
-                    elif messaging_event["message"]["attachments"].get("payload")["coordinates"]:    # if location
+                    except:
+                        pass
+                    try: # if location
+                    # elif messaging_event["message"]["attachments"].get("payload")["coordinates"]:    # if location
                         latitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["lat"]
                         longitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["long"]
                         response = "I got a location!"
                         # response = "Location is: " + str(latitude) + ", " + str(longitude)
+                    except:
+                        pass
 
                     if response is not None:
                         send_message(sender_id, response)
