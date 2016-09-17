@@ -44,7 +44,10 @@ def webhook():
                     response = diagnose.getResponse(message)                               
 
                     if response is not None:
-                        send_message(sender_id, response)
+                        if response == "Hi":
+                            send_buttom_template(sender_id)
+                        else:
+                            send_message(sender_id, response)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -92,6 +95,32 @@ def send_buttom_template(recipient_id):
     headers = {
         "Content-Type": "application/json"
     }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message":{
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"button",
+                    "text":"What do you want to do next?",
+                    "buttons":[
+                        {
+                        "type":"web_url",
+                        "url":"https://www.google.com",
+                        "title":"Show Website"
+                        }
+                    ]
+                }
+            }
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
+
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
