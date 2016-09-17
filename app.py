@@ -128,7 +128,7 @@ def webhook():
 
 def send_message(sender_id, message_text):
 
-    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    log("sending message to {recipient}: {text}".format(recipient=sender_id, text=message_text))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -138,7 +138,7 @@ def send_message(sender_id, message_text):
     }
     data = json.dumps({
         "recipient": {
-            "id": recipient_id
+            "id": sender_id
         },
         "message": {
             "text": message_text
@@ -182,7 +182,7 @@ def init_buttom_template(sender_id):
     else:
         welcome_message = "Hello "+first_name+" "+last_name + "! How may I help you?" 
 
-    log("Sending button template to {recipient}.".format(recipient=recipient_id))
+    log("Sending button template to {recipient}.".format(recipient=sender_id))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -192,7 +192,7 @@ def init_buttom_template(sender_id):
     }
     data = json.dumps({
         "recipient": {
-            "id": recipient_id
+            "id": sender_id
         },
         "message":{
             "attachment":{
@@ -211,12 +211,6 @@ def init_buttom_template(sender_id):
                         'title': 'Health alerts',
                         'payload': 'Which diseases and/or symptoms would you like to check in your local area?'
                         }
-                        # ,
-                        # {
-                        # 'type': 'web_url',
-                        # 'title': 'Get medical info',
-                        # 'url': 'www.google.com'
-                        # }
                     ]
                 }
             }
