@@ -46,8 +46,8 @@ def webhook():
                     if message.get("text"):
                         response = diagnose.getResponse(message["text"])
                     elif message.get("attachments"):
-                        attach = message["attachments"]
-                        if attach["payload"]:
+                        attach = message["attachments"][0]  # loop over attachments?
+                        if attach.get("payload"):
                             payload = attach["payload"]
                             if payload.get("coordinates"):
                                 coordinates = payload["coordinates"]
