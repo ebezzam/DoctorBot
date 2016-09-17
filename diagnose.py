@@ -13,8 +13,6 @@ def diagnose(sender_id):
     except:
         gender = ""
 
-    symptons = None
-    while symptons is not None:
 
 
 
