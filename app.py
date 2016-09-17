@@ -44,26 +44,7 @@ def webhook():
 
                     # sort different types of messages
                     message = messaging_event["message"]
-
-                    if message.get("text"): # get message
-                        response = diagnose.getResponse(message["text"])
-                    elif message.get("attachments"):    # get attachment
-                        attach = message["attachments"][0]  # loop over attachments?
-                        if attach["type"] == "location":
-                            latitude = attach["payload"]["coordinates"]["lat"]
-                            longitude = attach["payload"]["coordinates"]["long"] 
-                            response = "Location: " + str(latitude) + ", " + str(longitude)  
-                        elif attach["type"] == "image":
-                            image_url = attach["payload"]["url"]
-                            response = "Image url: " + image_url
-
-
-                        # if attach.get("payload"):
-                        #     payload = attach["payload"]
-                        #     if payload.get("coordinates"):
-                        #         latitude = payload["coordinates"]["lat"]
-                        #         longitude = payload["coordinates"]["long"]
-                                
+                    response = diagnose.getResponse(message)                               
 
                     if response is not None:
                         send_message(sender_id, response)
