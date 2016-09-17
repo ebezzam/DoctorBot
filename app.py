@@ -44,7 +44,7 @@ def webhook():
                         message_text = messaging_event["message"]["text"]  # the message's text
                         response = diagnose.getResponse(message_text)
                         send_message(sender_id, response)
-                    if messaging_event["message"]["attachments"]["payload"]["coordinates"]:
+                    elif messaging_event["message"]["attachments"]["payload"]["coordinates"]:
                         location = messaging_event["message"]["attachments"]["payload"]["coordinates"]
                         latitude = location["lat"]
                         longitude = location["long"]
