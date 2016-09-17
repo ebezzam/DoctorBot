@@ -3,6 +3,7 @@ import sys
 import json
 
 import requests
+import diagnose
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -39,11 +40,8 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
 
-                    if message_text == "Hello":
-                        message = "I am DoctorBot. I hate you!"
-                        send_message(sender_id, message)
-                    else:
-                        send_message(sender_id, message_text)
+                    response = diagnose.getResponse(message_text)
+                    send_message(sender_id, response)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
