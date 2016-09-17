@@ -5,7 +5,6 @@ import json
 import requests
 import diagnose
 from flask import Flask, request
-import pymessenger
 
 app = Flask(__name__)
 
@@ -24,8 +23,6 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
-
-    # bot = Bot(EAAY6843ZAa98BAGV6KL3KN2wlZC1g3iLUAEFa4FUYZBaffkDBF1LxRzoeMooyKyZC8qZC7ZBZCCSi2hcD0d0sNpCsBzVX7rmNS4VAlb5owC6JVAXFcT4HAGhKjzD4zecVKISxb8oZB6o2h9FgC9ZCpLknvzCNWvS9PUNiHup6KHbCHwZDZD)
 
     # endpoint for processing incoming messaging events
     data = request.get_json()
