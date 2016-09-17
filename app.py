@@ -43,7 +43,7 @@ def webhook():
                     response = diagnose.get_response(message)                               
 
                     if response is not None:
-                    log(response)
+                        log(response)
                         if response == "Hi":
                             send_buttom_template(sender_id)
                         else:
