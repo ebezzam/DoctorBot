@@ -42,7 +42,7 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
 
                     # sort different types of messages
-                    response = None
+                    message = None
                     message = messaging_event["message"]
                     if message.get("text"): # get message
                         message = message["text"]
@@ -55,8 +55,8 @@ def webhook():
                             longitude = attach["payload"]["coordinates"]["long"]
                             clinic_type = "hospital"
                             clinicsURL = "https://api.foursquare.com/v2/venues/search?ll="+str(longitude)+","+str(latitude)+"&radius=15000&query="+clinic_type+"&client_id=1TCDH3ZYXC3NYNCRVL1RL4WEGDP4CHZSLPMKGCBIHAYYVJWA&client_secret=VASKTPATQLSPXIFJZQ0EZ4GDH2QAZU1QGEEZ4YDCKYA11V2J&v=20160917"
-                            response = urllib.urlopen(clinicsURL)
-                            data = json.loads(response.read())
+                            r = urllib.urlopen(clinicsURL)
+                            data = json.loads(r.read())
                             hospitals = []
                             latitudes = []
                             longitudes = []
@@ -83,9 +83,9 @@ def webhook():
                             message = "Image url: " + image_url
                     # response = diagnose.get_response(message)
 
-                    if response is not None:
-                        log(response)
-                        if response == "Hi":
+                    if message is not None:
+                        log(message)
+                        if message == "Hi":
                             init_buttom_template(sender_id)
                         else:
                             send_message(sender_id, message)
