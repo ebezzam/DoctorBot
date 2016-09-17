@@ -42,8 +42,6 @@ def webhook():
                     if message_text == "Hello":
                         message = "Welcome to DoctorBot! How may I help you?"
                         send_message(sender_id, message)
-                    elif message_text == "LauzHack":
-                        send_message(sender_id, "#HackTheAlps")
                     else:
                         send_message(sender_id, message_text)
 
