@@ -7,7 +7,6 @@ import apiai
 import diagnose
 import sqlite3
 import urllib, json
-from fbmq import Attachment, Template, QuickReply, Page
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -81,7 +80,7 @@ def webhook():
                                 mapurl = mapurl +"&markers=color:red%7Clabel:H%7C"+str(latitudes[y])+","+str(longitudes[y])
                             send_message(sender_id, "And here they are on a map :)")
                             #sendImage
-                            page.send(sender_id, Attachment.File(mapurl))
+                            send_message(sender_id, mapurl)
                         elif attach["type"] == "image":
                             image_url = attach["payload"]["url"]
                             message = "Image url: " + image_url
@@ -117,9 +116,9 @@ def apiai_analysis(message):
     # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
 
     request.query = message
+
     response = request.getresponse()
-    data = json.loads(response.read())
-    response = str(data["result"]["fulfillment"]["speech"])
+
     return response
 
 

@@ -8,4 +8,3 @@ itsdangerous==0.24
 requests==2.10.0
 wsgiref==0.1.2
 apiai==1.0.2
-fbmq==2.0.0
