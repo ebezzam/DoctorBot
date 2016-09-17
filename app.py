@@ -5,7 +5,7 @@ import json
 import requests
 import diagnose
 from flask import Flask, request
-# from pymessenger.bot import Bot
+from pymessenger import *
 
 app = Flask(__name__)
 
