@@ -61,6 +61,8 @@ def webhook():
                         log(response)
                         if response == "Hi":
                             init_buttom_template(sender_id)
+                        elif response == "Symptom checker":
+                            send_message(sender_id, "What symptoms do you have?")
                         else:
                             send_message(sender_id, response)
 
