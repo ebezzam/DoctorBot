@@ -4,7 +4,7 @@ import json
 
 import requests
 import apiai
-from diagnose import diagnose, apiai_analysis
+from diagnose import diagnose, apiai_symptom
 import sqlite3
 import urllib, json
 from flask import Flask, request
