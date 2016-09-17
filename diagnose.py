@@ -1,21 +1,38 @@
 import os
 import sys
 import json
+import requests
 
-def get_response(message):
-	# gender
-	# age
-	# 
-    # response = None
-    # if message.get("text"): # get message
-    #     response = message["text"]
-    # elif message.get("attachments"):    # get attachment
-    #     attach = message["attachments"][0]  # loop over attachments?
-    #     if attach["type"] == "location":
-    #         latitude = attach["payload"]["coordinates"]["lat"]
-    #         longitude = attach["payload"]["coordinates"]["long"] 
-    #         response = "Location: " + str(latitude) + ", " + str(longitude)  
-    #     elif attach["type"] == "image":
-    #         image_url = attach["payload"]["url"]
-    #         response = "Image url: " + image_url
-	return message
+def diagnose(sender_id):
+
+    # get user info
+    r = requests.get('https://graph.facebook.com/v2.6/'+sender_id+
+        '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+os.environ["PAGE_ACCESS_TOKEN"])
+    try:
+        gender = str(r.json()["gender"])
+    except:
+        gender = ""
+
+    symptons = None
+    while symptons is not None:
+
+
+
+def apiai_symptom(message):
+
+    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
+    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+
+    request = ai.text_request()
+
+    request.lang = 'en'  # optional, default value equal 'en'
+
+    # request.session_id = "<SESSION ID, UNIQUE FOR EACH USER>"
+
+    request.query = message
+    response = request.getresponse()
+    data = json.loads(response.read())
+    response = str(data["result"]["fulfillment"]["speech"])
+    symptom = str(data["result"]["parameter"]["symptoms"])
+    return symptom
+

@@ -4,13 +4,18 @@ import json
 
 import requests
 import apiai
-import diagnose
+from diagnose import diagnose, apiai_analysis
 import sqlite3
 import urllib, json
 from flask import Flask, request
 
 app = Flask(__name__)
 
+symptom_mode = False
+symptom = None
+age = None
+gender = None
+alert_mode = False
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -46,10 +51,21 @@ def webhook():
                     message = messaging_event["message"]
                     if message.get("text"): # get message
                         message = message["text"]
-                        if message == "Hi":
-                            init_buttom_template(sender_id)
+                        if symptom_mode:
+                            symptoms = 3
+                            print symptoms
+                            # if symptom == None
+                            #     symptom = apiai_symptom(message) # assuming user put symptom
+                            # elif 
+
+
+                        elif alert_mode:
+                            pass
                         else:
-                            message = apiai_analysis(message)
+                            if message == "Hi":
+                                init_buttom_template(sender_id)
+                            else:
+                                send_message(sender_id, message) "Say 'Hi' to the DoctorBot to get started!")
 
                     elif message.get("attachments"):    # get attachment
                         attach = message["attachments"][0]  # loop over attachments?
@@ -84,11 +100,11 @@ def webhook():
                         elif attach["type"] == "image":
                             image_url = attach["payload"]["url"]
                             message = "Image url: " + image_url
-                    # response = diagnose.get_response(message)
+                            send_message(sender_id, message)
 
-                    if message is not None and message != "Hi":
-                        log(message)
-                        send_message(sender_id, message)
+                    # if message is not None and message != "Hi":
+                    #     log(message)
+                    #     send_message(sender_id, message) "Say 'Hi' to the DoctorBot to get started!")
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -101,26 +117,12 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]
                     message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
+                    if message == 'In order to properly help you, I will \
+                        need to ask you a few questions. What symptoms do you have?':
+                        symptom_mode = True
+                    elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
+                        alert_mode = True
     return "ok", 200
-
-
-def apiai_analysis(message):
-
-    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
-    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
-
-    request = ai.text_request()
-
-    request.lang = 'en'  # optional, default value equal 'en'
-
-    # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
-
-    request.query = message
-    response = request.getresponse()
-    data = json.loads(response.read())
-    response = str(data["result"]["fulfillment"]["speech"])
-    return response
-
 
 def send_message(recipient_id, message_text):
 
