@@ -244,4 +244,14 @@ def log(message):  # simple wrapper for logging to stdout on heroku
 
 
 if __name__ == '__main__':
+    global symptom
+    global symptom_mode
+    global age
+    global gender
+    global alert_mode
+    symptom_mode = False
+    symptom = None
+    age = None
+    gender = None
+    alert_mode = False
     app.run(debug=True)
