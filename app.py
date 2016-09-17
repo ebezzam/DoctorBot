@@ -4,6 +4,7 @@ import json
 
 import requests
 import diagnose
+import facebook
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -56,7 +57,7 @@ def webhook():
                     if response is not None:
                         log(response)
                         if response == "Hi":
-                            init_buttom_template(sender_id)
+                            init_buttom_template(sender_id, last_name)
                         else:
                             send_message(sender_id, response)
 
@@ -77,6 +78,15 @@ def webhook():
 
 
 def send_message(recipient_id, message_text):
+
+    # get user info
+    r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
+        '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
+        +os.environ["PAGE_ACCESS_TOKEN"])
+    first_name = str(r.json()["first_name"])
+    last_name = str(r.json()["last_name"])
+    gender = str(r.json()["gender"])
+    profile_pic = str(r.json()["profile_pic"])
 
     log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
@@ -100,7 +110,37 @@ def send_message(recipient_id, message_text):
         log(r.text)
 
 
-def init_buttom_template(recipient_id):
+def init_buttom_template(recipient_id, last_name):
+
+    # get user info
+    r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
+        '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
+        +os.environ["PAGE_ACCESS_TOKEN"])
+    try:
+        first_name = str(r.json()["first_name"])
+    except:
+        first_name = None
+    try:
+        last_name = str(r.json()["last_name"])
+    except
+        last_name = None
+    try:
+        gender = str(r.json()["gender"])
+    except:
+        gender = None
+    try:
+        profile_pic = str(r.json()["profile_pic"])
+    except:
+        profile_pic = None
+
+    welcome_message = "Hello! How may I help you?"
+    if gender is not None:
+        if gender == 'male':
+            welcome_message = "Hello Mr."+" "+first_name+" "+last_name + "! How may I help you?"
+        else:
+            welcome_message = "Hello Ms."+" "+first_name+" "+last_name + "! How may I help you?"
+    else:
+        welcome_message = "Hello "+first_name+" "+last_name + "! How may I help you?" 
 
     log("Sending button template to {recipient}.".format(recipient=recipient_id))
 
@@ -119,7 +159,7 @@ def init_buttom_template(recipient_id):
                 "type":"template",
                 "payload":{
                     "template_type":"button",
-                    "text":"Hey! How can I help you?",
+                    "text": welcome_message,
                     "buttons":[
                         {
                         'type': 'postback',
