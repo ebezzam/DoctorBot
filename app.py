@@ -45,6 +45,8 @@ def webhook():
                     message = messaging_event["message"]
                     if message.get("text"): # get message
                         message = message["text"]
+                        message = apiai_analysis(message)
+
                     elif message.get("attachments"):    # get attachment
                         attach = message["attachments"][0]  # loop over attachments?
                         if attach["type"] == "location":
@@ -79,6 +81,7 @@ def webhook():
                             image_url = attach["payload"]["url"]
                             message = "Image url: " + image_url
                     response = diagnose.get_response(message)
+
                     if response is not None:
                         log(response)
                         if response == "Hi":
@@ -98,6 +101,28 @@ def webhook():
                     message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
     return "ok", 200
+
+
+def apiai_analysis(message):
+
+    headers["Authorization"] = "Bearer 31df623f4c1846209c287dc9e8f36a2e"
+    url = "https://api.api.ai/v1/query="+message
+    r = requests.get
+
+    curl -H "Authorization: Bearer f2c3166a316843ca95e399a19333c873" 
+
+
+
+    curl 'https://api.api.ai/api/query?v=20150910&query=I%20have%20a%20headache&
+    lang=en&sessionId=83daf53e-1c3d-4330-9952-3d4a6d463457&timezone=2016-09-17T20:29:47+0200' 
+    -H 'Authorization:Bearer 31df623f4c1846209c287dc9e8f36a2e'
+    
+
+
+
+    r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
+        '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
+        +os.environ["PAGE_ACCESS_TOKEN"])
 
 
 def send_message(recipient_id, message_text):
