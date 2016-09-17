@@ -7,7 +7,7 @@ def get_response(message):
 	# age
 	# 
     response = None
-    if message.get("text"): # get message
+    if message[0].get("text"): # get message
         response = message["text"]
     elif message.get("attachments"):    # get attachment
         attach = message["attachments"][0]  # loop over attachments?
