@@ -124,17 +124,17 @@ def init_buttom_template(recipient_id):
                         {
                         'type': 'postback',
                         'title': 'Symptom checker',
-                        'payload': 'symptomChecker_init'
+                        'payload': 'What symptoms do you have?'
                         },
                         {
                         'type': 'postback',
                         'title': 'Health alerts',
-                        'payload': 'healtAlerts_init'
+                        'payload': 'Which diseases/symptoms would you like to check in your local area?'
                         },
                         {
                         'type': 'postback',
                         'title': 'Get medical info',
-                        'payload': 'medInfo_init'
+                        'payload': 'Which disease/symptoms would you like to know more about?'
                         }
                     ]
                 }
