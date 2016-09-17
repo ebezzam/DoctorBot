@@ -119,9 +119,9 @@ def webhook():
                     send_message(sender_id, message)
                     if message == 'In order to properly help you, I will \
                         need to ask you a few questions. What symptoms do you have?':
-                        global symptom_mode = True
+                        symptom_mode = True
                     elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
-                        global alert_mode = True
+                        alert_mode = True
     return "ok", 200
 
 def send_message(recipient_id, message_text):
