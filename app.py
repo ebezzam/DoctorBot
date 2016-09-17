@@ -38,22 +38,33 @@ def webhook():
 
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-
                     response = None
-                    try: #if text
-                    # if messaging_event["message"]["text"]:  # if text
-                        message_text = messaging_event["message"]["text"]
-                        response = diagnose.getResponse(message_text)
-                    except:
-                        pass
-                    try: # if location
-                    # elif messaging_event["message"]["attachments"].get("payload")["coordinates"]:    # if location
-                        latitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["lat"]
-                        longitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["long"]
-                        response = "I got a location!"
-                        # response = "Location is: " + str(latitude) + ", " + str(longitude)
-                    except:
-                        pass
+
+                    # sort different types of messages
+                    message = messaging_event["message"]
+
+                    if message.get("text"):
+                        response = diagnose.getResponse(message["text"])
+                    elif message.get("attachments").get("payload").get("coordinates"):
+                        location = message["attachments"]["title"]
+                        response = diagnose.getResponse(location)
+
+
+
+                    # try: #if text
+                    #     message_text = messaging_event["message"]["text"]
+                    #     response = diagnose.getResponse(message_text)
+                    #     break
+                    # except:
+                    #     pass
+                    # try: # if location
+                    #     latitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["lat"]
+                    #     longitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["long"]
+                    #     response = "I got a location!"
+                    #     # response = "Location is: " + str(latitude) + ", " + str(longitude)
+                    #     break
+                    # except:
+                    #     pass
 
                     if response is not None:
                         send_message(sender_id, response)
