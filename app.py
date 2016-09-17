@@ -63,10 +63,10 @@ def webhook():
                             else:
                                 maxi = len(venues)
                             for x in range(0, maxi):
-                                hospitals.append(venues[str(x)]["name"])
-                                send_message(sender_id, "Option #"+str(x+1)+": "+venues[str(x)]["name"])
-                                latitudes.append(venues[str(x)]["location"]["lat"])
-                                longitudes.append(venues[str(x)]["location"]["lng"])
+                                hospitals.append(venues[x]["name"])
+                                send_message(sender_id, "Option #"+str(x+1)+": "+venues[x]["name"])
+                                latitudes.append(venues[x]["location"]["lat"])
+                                longitudes.append(venues[x]["location"]["lng"])
                             message = "Location: " + str(latitude) + ", " + str(longitude)
 
                             mapurl = "https://maps.googleapis.com/maps/api/staticmap?center="+str(latitude)+","+str(longitude)+"&markers=color:green%7C"+str(latitude)+","+str(longitude)+"&key=AIzaSyB1CFi3ImDxL21QTu7EN2e-RvP2LPAJgiY&size=800x800"
