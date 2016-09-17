@@ -189,7 +189,7 @@ def init_buttom_template(recipient_id):
                         {
                         'type': 'postback',
                         'title': 'Symptom checker',
-                        'payload': 'What symptoms do you have?'
+                        'payload': 'In order to properly help you, I will need to ask you a few questions. What symptoms do you have?'
                         },
                         {
                         'type': 'postback',
