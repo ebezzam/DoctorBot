@@ -23,23 +23,42 @@ def verify():
     return "Hello!", 200
 
 
+@app.route('/symptom', methods=['POST'])
+def symptom_checker():
+    data = request.get_json()
+    for entry in data["entry"]:
+            for messaging_event in entry["messaging"]:
+                if messaging_event.get("message"):
+                    message = messaging_event["message"]
+                    if message.get("text"): # get message
+                        message = message["text"]
+                        symptom = api_ai_analysis(message)
+
+
+
 @app.route('/', methods=['POST'])
 def webhook():
-
     # endpoint for processing incoming messaging events
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
 
     if data["object"] == "page":
-
         for entry in data["entry"]:
             for messaging_event in entry["messaging"]:
 
-                if messaging_event.get("message"):  # someone sent us a message
+                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
+                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
+                    recipient_id = messaging_event["recipient"]["id"]
+                    message = messaging_event["postback"]["payload"]
+                    send_message(sender_id, message)
+                    if message == 'In order to properly help you, I will \
+                        need to ask you a few questions. What symptoms do you have?': 
+                        return redirect('/symptom') 
+                    # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
 
+                if messaging_event.get("message"):  # someone sent us a message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-
                     # sort different types of messages
                     message = messaging_event["message"]
                     if message.get("text"): # get message
@@ -48,10 +67,6 @@ def webhook():
                             init_buttom_template(sender_id)
                         else:
                             send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
-
-
-
-
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
@@ -106,9 +121,6 @@ def webhook():
                     #         message = "Image url: " + image_url
                     #         send_message(sender_id, message)
 
-                    # if message is not None and message != "Hi":
-                    #     log(message)
-                    #     send_message(sender_id, message) "Say 'Hi' to the DoctorBot to get started!")
 
                 # if messaging_event.get("delivery"):  # delivery confirmation
                 #     pass
@@ -116,17 +128,26 @@ def webhook():
                 # if messaging_event.get("optin"):  # optin confirmation
                 #     pass
 
-                if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
-                    recipient_id = messaging_event["recipient"]["id"]
-                    message = messaging_event["postback"]["payload"]
-                    send_message(sender_id, message)
-                    # if message == 'In order to properly help you, I will \
-                    #     need to ask you a few questions. What symptoms do you have?':
-                    #     symptom_mode = True
-                    # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
-                    #     alert_mode = True
     return "ok", 200
+
+def api_ai_analysis(message):
+
+    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
+    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+
+    request = ai.text_request()
+
+    request.lang = 'en'  # optional, default value equal 'en'
+
+    # request.session_id = "<SESSION ID, UNIQUE FOR EACH USER>"
+
+    request.query = message
+    response = request.getresponse()
+    data = json.loads(response.read())
+    print data
+    # response = str(data["result"]["fulfillment"]["speech"])
+    symptom = str(data["result"]["parameter"]["symptoms"])
+    return symptom
 
 def send_message(sender_id, message_text):
 

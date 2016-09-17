@@ -15,22 +15,3 @@ def diagnose(sender_id):
 
 
 
-
-def apiai_symptom(message):
-
-    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
-    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
-
-    request = ai.text_request()
-
-    request.lang = 'en'  # optional, default value equal 'en'
-
-    # request.session_id = "<SESSION ID, UNIQUE FOR EACH USER>"
-
-    request.query = message
-    response = request.getresponse()
-    data = json.loads(response.read())
-    response = str(data["result"]["fulfillment"]["speech"])
-    symptom = str(data["result"]["parameter"]["symptoms"])
-    return symptom
-
