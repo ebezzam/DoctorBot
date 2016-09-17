@@ -8,7 +8,7 @@ def getResponse(message):
 	# 
     if message.get("text"): # get message
         response = message["text"]
-    if message.get("attachments"):    # get attachment
+    elif message.get("attachments"):    # get attachment
         attach = message["attachments"][0]  # loop over attachments?
         if attach["type"] == "location":
             latitude = attach["payload"]["coordinates"]["lat"]
