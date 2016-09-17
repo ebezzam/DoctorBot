@@ -54,9 +54,6 @@ def webhook():
                             message = "Image url: " + image_url
                     response = diagnose.get_response(message)
 
-                    # if message = "symptomChecker_init":
-                    #     response = "I'm gonna check your symptoms"
-
                     if response is not None:
                         log(response)
                         if response == "Hi":
@@ -71,6 +68,8 @@ def webhook():
                     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
+                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
+                    recipient_id = messaging_event["recipient"]["id"]
                     send_message(sender_id, "What symptoms do you have?")
 
     return "ok", 200
