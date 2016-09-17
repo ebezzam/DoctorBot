@@ -7,6 +7,7 @@ import diagnose
 import sqlite3
 import urllib, json
 
+# import facebook
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ def verify():
             return "Verification token mismatch", 403
         return request.args["hub.challenge"], 200
 
-    return "Hello world", 200
+    return "Hello!", 200
 
 
 @app.route('/', methods=['POST'])
@@ -97,12 +98,19 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]
                     message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
-                    # send_message(sender_id, "What symptoms do you have?")
-
     return "ok", 200
 
 
 def send_message(recipient_id, message_text):
+
+    # get user info
+    r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
+        '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
+        +os.environ["PAGE_ACCESS_TOKEN"])
+    first_name = str(r.json()["first_name"])
+    last_name = str(r.json()["last_name"])
+    gender = str(r.json()["gender"])
+    profile_pic = str(r.json()["profile_pic"])
 
     log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
@@ -128,6 +136,36 @@ def send_message(recipient_id, message_text):
 
 def init_buttom_template(recipient_id):
 
+    # get user info
+    r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
+        '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='
+        +os.environ["PAGE_ACCESS_TOKEN"])
+    try:
+        first_name = str(r.json()["first_name"])
+    except:
+        first_name = None
+    try:
+        last_name = str(r.json()["last_name"])
+    except:
+        last_name = None
+    try:
+        gender = str(r.json()["gender"])
+    except:
+        gender = None
+    try:
+        profile_pic = str(r.json()["profile_pic"])
+    except:
+        profile_pic = None
+
+    welcome_message = "Hello! How may I help you?"
+    if gender is not None:
+        if gender == 'male':
+            welcome_message = "Hello Mr."+" "+first_name+" "+last_name + "! How may I help you?"
+        else:
+            welcome_message = "Hello Ms."+" "+first_name+" "+last_name + "! How may I help you?"
+    else:
+        welcome_message = "Hello "+first_name+" "+last_name + "! How may I help you?" 
+
     log("Sending button template to {recipient}.".format(recipient=recipient_id))
 
     params = {
@@ -145,7 +183,7 @@ def init_buttom_template(recipient_id):
                 "type":"template",
                 "payload":{
                     "template_type":"button",
-                    "text":"Hey! How can I help you?",
+                    "text": welcome_message,
                     "buttons":[
                         {
                         'type': 'postback',
@@ -156,12 +194,13 @@ def init_buttom_template(recipient_id):
                         'type': 'postback',
                         'title': 'Health alerts',
                         'payload': 'Which diseases and/or symptoms would you like to check in your local area?'
-                        },
-                        {
-                        'type': 'postback',
-                        'title': 'Get medical info',
-                        'payload': 'Which disease and/or symptoms would you like to know more about today?'
                         }
+                        # ,
+                        # {
+                        # 'type': 'web_url',
+                        # 'title': 'Get medical info',
+                        # 'url': 'www.google.com'
+                        # }
                     ]
                 }
             }
