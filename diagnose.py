@@ -8,7 +8,7 @@ def getResponse(message):
 	# 
     if message.get("text"): # get message
         response = message["text"]
-        log("THIS IS THE RESPONSE = ",response)
+        # log("THIS IS THE RESPONSE = ",response)
     elif message.get("attachments"):    # get attachment
         attach = message["attachments"][0]  # loop over attachments?
         if attach["type"] == "location":
