@@ -120,17 +120,17 @@ def init_buttom_template(recipient_id):
                     "buttons":[
                         {
                         'type': 'postback',
-                        'title': 'Use Symptom Checker',
+                        'title': 'Symptom checker',
                         'payload': 'symptomChecker_init'
                         },
                         {
                         'type': 'postback',
-                        'title': 'View Health Alerts near you',
+                        'title': 'Health alerts near you',
                         'payload': 'healtAlerts_init'
                         },
                         {
                         'type': 'postback',
-                        'title': 'Get some Medical Information',
+                        'title': 'Get medical information',
                         'payload': 'medInfo_init'
                         }
                     ]
