@@ -42,6 +42,8 @@ def webhook():
                     if message_text == "Hello":
                         message = "Welcome to DoctorBot! How may we help you?"
                         send_message(sender_id, message)
+                    elif message_text == "Thank you"
+                        send_message(sender_id, "You're welcome!")
                     else:
                         send_message(sender_id, message_text)
 
