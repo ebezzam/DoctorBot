@@ -57,7 +57,7 @@ def webhook():
                     if response is not None:
                         log(response)
                         if response == "Hi":
-                            send_buttom_template(sender_id)
+                            init_buttom_template(sender_id)
                         else:
                             send_message(sender_id, response)
 
@@ -97,7 +97,7 @@ def send_message(recipient_id, message_text):
         log(r.text)
 
 
-def send_buttom_template(recipient_id):
+def init_buttom_template(recipient_id):
 
     log("Sending button template to {recipient}.".format(recipient=recipient_id))
 
@@ -116,12 +116,22 @@ def send_buttom_template(recipient_id):
                 "type":"template",
                 "payload":{
                     "template_type":"button",
-                    "text":"What do you want to do next?",
+                    "text":"Hey! How can I help you?",
                     "buttons":[
                         {
-                        "type":"web_url",
-                        "url":"http://lmgtfy.com/?q=Medical+Condition",
-                        "title":"Show Website"
+                        'type': 'postback',
+                        'title': 'Use Symptom Checker',
+                        'payload': 'symptomChecker_init'
+                        },
+                        {
+                        'type': 'postback',
+                        'title': 'View Health Alerts near you',
+                        'payload': 'healtAlerts_init'
+                        },
+                        {
+                        'type': 'postback',
+                        'title': 'Get some Medical Information',
+                        'payload': 'medInfo_init'
                         }
                     ]
                 }
