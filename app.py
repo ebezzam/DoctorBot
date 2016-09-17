@@ -3,7 +3,6 @@ import sys
 import json
 
 import requests
-import apiai
 import diagnose
 import sqlite3
 import urllib, json
