@@ -37,11 +37,10 @@ def webhook():
 
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                    response = None
 
                     # sort different types of messages
                     message = messaging_event["message"]
-                    response = diagnose.getResponse(message)                               
+                    response = diagnose.get_response(message)                               
 
                     if response is not None:
                         if response == "Hi":
