@@ -60,6 +60,7 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     # sort different types of messages
                     message = messaging_event["message"]
+                    
                     if message.get("text"): # get message
                         message = message["text"]
                         if message == "DoctorBot":
@@ -85,40 +86,40 @@ def webhook():
                     #         else:
                     #             send_message(sender_id, "Say 'Hi' to the DoctorBot to get started!")
 
-                    # elif message.get("attachments"):    # get attachment
-                    #     attach = message["attachments"][0]  # loop over attachments?
-                    #     if attach["type"] == "location":
-                    #         latitude = attach["payload"]["coordinates"]["lat"]
-                    #         longitude = attach["payload"]["coordinates"]["long"]
-                    #         clinic_type = "hospital"
-                    #         clinicsURL = "https://api.foursquare.com/v2/venues/search?ll="+str(latitude)+","+str(longitude)+"&radius=15000&query="+clinic_type+"&client_id=1TCDH3ZYXC3NYNCRVL1RL4WEGDP4CHZSLPMKGCBIHAYYVJWA&client_secret=VASKTPATQLSPXIFJZQ0EZ4GDH2QAZU1QGEEZ4YDCKYA11V2J&v=20160917"
-                    #         r = urllib.urlopen(clinicsURL)
-                    #         data = json.loads(r.read())
-                    #         hospitals = []
-                    #         latitudes = []
-                    #         longitudes = []
-                    #         venues = data["response"]["venues"]
-                    #         if len(venues) > 3:
-                    #             maxi = 3
-                    #         else:
-                    #             maxi = len(venues)
-                    #         for x in range(0, maxi):
-                    #             hospitals.append(venues[x]["name"])
-                    #             send_message(sender_id, "Option #"+str(x+1)+": "+venues[x]["name"])
-                    #             latitudes.append(venues[x]["location"]["lat"])
-                    #             longitudes.append(venues[x]["location"]["lng"])
-                    #         message = "Location: " + str(latitude) + ", " + str(longitude)
+                    elif message.get("attachments"):    # get attachment
+                        attach = message["attachments"][0]  # loop over attachments?
+                        if attach["type"] == "location":
+                            latitude = attach["payload"]["coordinates"]["lat"]
+                            longitude = attach["payload"]["coordinates"]["long"]
+                            clinic_type = "hospital"
+                            clinicsURL = "https://api.foursquare.com/v2/venues/search?ll="+str(latitude)+","+str(longitude)+"&radius=15000&query="+clinic_type+"&client_id=1TCDH3ZYXC3NYNCRVL1RL4WEGDP4CHZSLPMKGCBIHAYYVJWA&client_secret=VASKTPATQLSPXIFJZQ0EZ4GDH2QAZU1QGEEZ4YDCKYA11V2J&v=20160917"
+                            r = urllib.urlopen(clinicsURL)
+                            data = json.loads(r.read())
+                            hospitals = []
+                            latitudes = []
+                            longitudes = []
+                            venues = data["response"]["venues"]
+                            if len(venues) > 3:
+                                maxi = 3
+                            else:
+                                maxi = len(venues)
+                            for x in range(0, maxi):
+                                hospitals.append(venues[x]["name"])
+                                send_message(sender_id, "Option #"+str(x+1)+": "+venues[x]["name"])
+                                latitudes.append(venues[x]["location"]["lat"])
+                                longitudes.append(venues[x]["location"]["lng"])
+                            message = "Location: " + str(latitude) + ", " + str(longitude)
 
-                    #         mapurl = "https://maps.googleapis.com/maps/api/staticmap?center="+str(latitude)+","+str(longitude)+"&markers=color:green%7C"+str(latitude)+","+str(longitude)+"&key=AIzaSyB1CFi3ImDxL21QTu7EN2e-RvP2LPAJgiY&size=800x800"
-                    #         for y in range(0,maxi):
-                    #             mapurl = mapurl +"&markers=color:red%7Clabel:H%7C"+str(latitudes[y])+","+str(longitudes[y])
-                    #         send_message(sender_id, "And here they are on a map :)")
-                    #         #sendImage
-                    #         send_message(sender_id, mapurl)
-                    #     elif attach["type"] == "image":
-                    #         image_url = attach["payload"]["url"]
-                    #         message = "Image url: " + image_url
-                    #         send_message(sender_id, message)
+                            mapurl = "https://maps.googleapis.com/maps/api/staticmap?center="+str(latitude)+","+str(longitude)+"&markers=color:green%7C"+str(latitude)+","+str(longitude)+"&key=AIzaSyB1CFi3ImDxL21QTu7EN2e-RvP2LPAJgiY&size=800x800"
+                            for y in range(0,maxi):
+                                mapurl = mapurl +"&markers=color:red%7Clabel:H%7C"+str(latitudes[y])+","+str(longitudes[y])
+                            send_message(sender_id, "And here they are on a map :)")
+                            #sendImage
+                            send_message(sender_id, mapurl)
+                        elif attach["type"] == "image":
+                            image_url = attach["payload"]["url"]
+                            message = "Image url: " + image_url
+                            send_message(sender_id, message)
 
 
                 # if messaging_event.get("delivery"):  # delivery confirmation
