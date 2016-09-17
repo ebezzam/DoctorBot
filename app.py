@@ -57,9 +57,9 @@ def webhook():
                     if response is not None:
                         log(response)
                         if response == "Hi":
-                            init_buttom_template(sender_id)
+                            init_buttom_template(recipient_id)
                         else:
-                            send_message(sender_id, response)
+                            send_message(recipient_id, response)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
