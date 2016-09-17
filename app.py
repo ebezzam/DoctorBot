@@ -54,8 +54,8 @@ def webhook():
                             message = "Image url: " + image_url
                     response = diagnose.get_response(message)
 
-                    if message = "symptomChecker_init":
-                        response = "I'm gonna check your symptoms"
+                    # if message = "symptomChecker_init":
+                    #     response = "I'm gonna check your symptoms"
 
                     if response is not None:
                         log(response)
