@@ -57,9 +57,9 @@ def webhook():
                     if response is not None:
                         log(response)
                         if response == "Hi":
-                            init_buttom_template(recipient_id)
+                            init_buttom_template(sender_id)
                         else:
-                            send_message(recipient_id, response)
+                            send_message(sender_id, response)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -143,7 +143,7 @@ def init_buttom_template(recipient_id):
         log(r.status_code)
         log(r.text)
 
-    log(r.status_code)
+    log(r.text)
 
 
 def log(message):  # simple wrapper for logging to stdout on heroku
