@@ -42,10 +42,12 @@ def webhook():
 
                     # sort different types of messages
                     message = messaging_event["message"]
-                    if message == "Calling DoctorBot":
-                        init_buttom_template(sender_id)
-                    else:
-                        send_message(sender_id, "For medical advice, enter 'Calling DoctorBot'")
+                    if message.get("text"): # get message
+                        message = message["text"]
+                        if message == "DoctorBot":
+                            init_buttom_template(sender_id)
+                        else:
+                            send_message(sender_id, "For medical advice, enter 'Calling DoctorBot'")
 
 
 
@@ -108,11 +110,11 @@ def webhook():
                     #     log(message)
                     #     send_message(sender_id, message) "Say 'Hi' to the DoctorBot to get started!")
 
-                if messaging_event.get("delivery"):  # delivery confirmation
-                    pass
+                # if messaging_event.get("delivery"):  # delivery confirmation
+                #     pass
 
-                if messaging_event.get("optin"):  # optin confirmation
-                    pass
+                # if messaging_event.get("optin"):  # optin confirmation
+                #     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
