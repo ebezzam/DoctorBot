@@ -46,7 +46,10 @@ def webhook():
                     message = messaging_event["message"]
                     if message.get("text"): # get message
                         message = message["text"]
-                        # message = apiai_analysis(message)
+                        if message == "Hi":
+                            init_buttom_template(sender_id)
+                        else:
+                            message = apiai_analysis(message)
 
                     elif message.get("attachments"):    # get attachment
                         attach = message["attachments"][0]  # loop over attachments?
@@ -85,10 +88,7 @@ def webhook():
 
                     if message is not None:
                         log(message)
-                        if message == "Hi":
-                            init_buttom_template(sender_id)
-                        else:
-                            send_message(sender_id, message)
+                        send_message(sender_id, message)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -106,20 +106,20 @@ def webhook():
 
 def apiai_analysis(message):
 
-    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
-    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+    # CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
+    # ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
 
-    request = ai.text_request()
+    # request = ai.text_request()
 
-    request.lang = 'en'  # optional, default value equal 'en'
+    # request.lang = 'en'  # optional, default value equal 'en'
 
-    # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
+    # # request.session_id = "<SESSION ID, UBIQUE FOR EACH USER>"
 
-    request.query = "I have a headache."
+    # request.query = "I have a headache."
 
-    response = request.getresponse()
+    # response = request.getresponse()
 
-    return response
+    return message
 
 
 def send_message(recipient_id, message_text):
