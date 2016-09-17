@@ -43,35 +43,16 @@ def webhook():
                     # sort different types of messages
                     message = messaging_event["message"]
 
-                    if message.get("text"):
+                    if message.get("text"): # get message
                         response = diagnose.getResponse(message["text"])
-                    elif message.get("attachments"):
+                    elif message.get("attachments"):    # get location
                         attach = message["attachments"][0]  # loop over attachments?
                         if attach.get("payload"):
                             payload = attach["payload"]
                             if payload.get("coordinates"):
-                                coordinates = payload["coordinates"]
-                                response = "got location"
-                        # get("payload").get("coordinates"):
-                        # location = message["attachments"]["title"]
-                        # response = diagnose.getResponse(location)
-
-
-
-                    # try: #if text
-                    #     message_text = messaging_event["message"]["text"]
-                    #     response = diagnose.getResponse(message_text)
-                    #     break
-                    # except:
-                    #     pass
-                    # try: # if location
-                    #     latitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["lat"]
-                    #     longitude = messaging_event["message"]["attachments"]["payload"]["coordinates"]["long"]
-                    #     response = "I got a location!"
-                    #     # response = "Location is: " + str(latitude) + ", " + str(longitude)
-                    #     break
-                    # except:
-                    #     pass
+                                latitude = payload["coordinates"]["lat"]
+                                longitude = payload["coordinates"]["long"]
+                                response = "Location is: " + str(latitude) + ", " + str(longitude)
 
                     if response is not None:
                         send_message(sender_id, response)
