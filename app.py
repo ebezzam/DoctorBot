@@ -62,6 +62,7 @@ def webhook():
                                 maxi = 3
                             else:
                                 maxi = len(venues)
+                            log(data)
                             for x in range(0, maxi):
                                 hospitals.append(venues[str(x)]["name"])
                                 send_message(sender_id, "Option #"+str(x+1)+": "+venues[str(x)]["name"])
