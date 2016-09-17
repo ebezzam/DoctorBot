@@ -72,8 +72,6 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]
                     message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
-                    # send_message(sender_id, "What symptoms do you have?")
-
     return "ok", 200
 
 
