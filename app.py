@@ -53,6 +53,7 @@ def webhook():
                     except:
                         pass
 
+                    print "Response is " + response
                     if response is not None:
                         send_message(sender_id, response)
 
