@@ -40,7 +40,7 @@ def webhook():
                     message_text = messaging_event["message"]["text"]  # the message's text
 
                     if message_text == "Hello":
-                        message = "Welcome to DoctorBot! How may I help you?"
+                        message = "I am DoctorBot. I hate you!"
                         send_message(sender_id, message)
                     else:
                         send_message(sender_id, message_text)
