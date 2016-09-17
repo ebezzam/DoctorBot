@@ -52,7 +52,10 @@ def webhook():
                         elif attach["type"] == "image":
                             image_url = attach["payload"]["url"]
                             message = "Image url: " + image_url
-                    response = diagnose.get_response(message)                               
+                    response = diagnose.get_response(message)
+
+                    if message = "symptomChecker_init":
+                        response = "I'm gonna check your symptoms"
 
                     if response is not None:
                         log(response)
