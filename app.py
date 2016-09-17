@@ -57,7 +57,7 @@ def webhook():
                     if response is not None:
                         log(response)
                         if response == "Hi":
-                            init_buttom_template(sender_id, last_name)
+                            init_buttom_template(sender_id)
                         else:
                             send_message(sender_id, response)
 
@@ -108,7 +108,7 @@ def send_message(recipient_id, message_text):
         log(r.text)
 
 
-def init_buttom_template(recipient_id, last_name):
+def init_buttom_template(recipient_id):
 
     # get user info
     r = requests.get('https://graph.facebook.com/v2.6/'+recipient_id+
