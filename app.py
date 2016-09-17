@@ -122,7 +122,7 @@ def init_buttom_template(recipient_id, last_name):
         first_name = None
     try:
         last_name = str(r.json()["last_name"])
-    except
+    except:
         last_name = None
     try:
         gender = str(r.json()["gender"])
