@@ -125,12 +125,12 @@ def init_buttom_template(recipient_id):
                         },
                         {
                         'type': 'postback',
-                        'title': 'Health alerts near you',
+                        'title': 'Health alerts',
                         'payload': 'healtAlerts_init'
                         },
                         {
                         'type': 'postback',
-                        'title': 'Get medical information',
+                        'title': 'Get medical info',
                         'payload': 'medInfo_init'
                         }
                     ]
