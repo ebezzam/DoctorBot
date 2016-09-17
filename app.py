@@ -38,10 +38,9 @@ def webhook():
 
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                    messaging_text = ""
-                    if messaging_event["message"]["text"]:
-                    	message_text = messaging_event["message"]["text"]  # the message's text
+                    message_text = messaging_event["message"]["text"]  # the message's text
 
+                    print message_text
                     response = diagnose.getResponse(message_text)
                     send_message(sender_id, response)
 
@@ -62,7 +61,7 @@ def send_message(recipient_id, message_text):
     log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
     params = {
-        "access_token": "EAAY6843ZAa98BAPRLZB1RSBHaDDTfn1DUtCmpuJYXDepbcJTPy8G9TiwZB2MsV0SGTDpfjZAFlpRqbuFBdemXvXhuH21M2p9ZAhQUCyDxIhJVDZAn9vwYS7d3ZBu356PTCNqAIkiBWNBFVzbJSIUXuPoW92oaHRUCdMrYDFotOi6QZDZD"
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
     headers = {
         "Content-Type": "application/json"
