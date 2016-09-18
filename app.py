@@ -164,9 +164,18 @@ def api_ai_filled(message):
     data = json.loads(response.read())
     print data
     # response = str(data["result"]["fulfillment"]["speech"])
-    symptom = str(data["result"]["parameters"]["symptoms"])
-    age = str(data["result"]["parameters"]["age"]["unit"])
-    gender = str(data["result"]["parameters"]["sex"])
+    try:
+        symptom = str(data["result"]["parameters"]["symptoms"])
+    except:
+        symptom = ""
+    try:
+        age = str(data["result"]["parameters"]["age"]["unit"])
+    except:
+        age = ""
+    try:
+        gender = str(data["result"]["parameters"]["sex"])
+    except:
+        gender = ""
 
     if(gender!="" and age!="" and symptom!=""):
         return True
