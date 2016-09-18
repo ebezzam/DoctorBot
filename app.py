@@ -66,6 +66,7 @@ def webhook():
                         # elif symptom_mode:
                         elif True:
                             if not api_ai_filled(message):
+                                send_message(sender_id, "Getting user info")
                                 response,symptom,gender,age = api_ai_analysis(message)
                                 send_message(sender_id, response)
                             else:
