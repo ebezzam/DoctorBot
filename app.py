@@ -64,8 +64,7 @@ def webhook():
                             init_buttom_template(sender_id)
                         global symptom_mode
                         if symptom_mode:
-                            send_message(sender_id, "In Symptom Mode.")
-                            if symptom == None:
+                            if not api_ai_filled(message):
                                 symptom = api_ai_analysis(message)
                             else:
                                 symptom_mode = False
@@ -147,8 +146,28 @@ def api_ai_analysis(message):
     data = json.loads(response.read())
     print data
     # response = str(data["result"]["fulfillment"]["speech"])
-    symptom = str(data["result"]["parameter"]["symptoms"])
+    symptom = str(data["result"]["parameters"]["symptoms"])
     return symptom
+
+def api_ai_filled(message):
+
+    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
+    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+    request = ai.text_request()
+    request.lang = 'en'  # optional, default value equal 'en'
+    request.query = message
+    response = request.getresponse()
+    data = json.loads(response.read())
+    print data
+    # response = str(data["result"]["fulfillment"]["speech"])
+    symptom = str(data["result"]["parameters"]["symptoms"])
+    age = str(data["result"]["parameters"]["age"]["unit"])
+    gender = str(data["result"]["parameters"]["sex"])
+
+    if(gender!="" and age!="" and symptom!=""):
+        return True
+    else:
+        return False
 
 def send_message(sender_id, message_text):
 
