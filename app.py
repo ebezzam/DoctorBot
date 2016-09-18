@@ -72,7 +72,7 @@ def webhook():
                         else:
                             
                             #send_message(sender_id, sympton)
-                            #send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
+                            send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
