@@ -8,6 +8,11 @@ import sqlite3
 import urllib, json
 from flask import Flask, request
 
+import infermedica_api
+
+api = infermedica_api.API(app_id='21794b8d', app_key='81f5f69f0cc9d2defaa3c722c0e905bf')
+print(api.info())
+
 app = Flask(__name__)
 
 symptom_mode = False
@@ -24,19 +29,6 @@ def verify():
         return request.args["hub.challenge"], 200
 
     return "Hello!", 200
-
-
-@app.route('/symptom', methods=['POST'])
-def symptom_checker():
-    data = request.get_json()
-    for entry in data["entry"]:
-            for messaging_event in entry["messaging"]:
-                if messaging_event.get("message"):
-                    message = messaging_event["message"]
-                    if message.get("text"): # get message
-                        message = message["text"]
-                        symptom = api_ai_analysis(message)
-
 
 
 @app.route('/', methods=['POST'])
@@ -73,7 +65,7 @@ def webhook():
                         if True:
                             send_message(sender_id, "In Symptom Mode.")
                             if symptom == None:
-                                symptom = apiai_symptom(message)
+                                symptom = api_ai_analysis(message)
                             else:
                                 symptom_mode = False
                         if message == "DoctorBot":
