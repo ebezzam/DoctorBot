@@ -58,6 +58,7 @@ def webhook():
                     message = messaging_event["message"]
                     gender = 'male'
                     age = 20
+                    sid = None
                     if message.get("text"): # get message
                         message = message["text"]
                         if message == "DoctorBot":
@@ -71,7 +72,7 @@ def webhook():
                         send_message(sender_id, "Give me a sec!")
 
                         global diagnosis
-                        if diagnosis is None:
+                        if diagnosis is None and sid is not None:
                             diagnosis = diagnose.init_diagnose(sid,age,gender,sender_id)
                             print diagnosis.question
                             print"------------------------------------------------------"
