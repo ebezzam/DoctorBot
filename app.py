@@ -58,16 +58,17 @@ def webhook():
                     
                     if message.get("text"): # get message
                         message = message["text"]
-                        global symptom_mode,symptom,gender,age
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
                         elif string.find(message,"headache"):
                             sid = diagnose.searchSymptom("headache", sender_id)
+                            send_message(sender_id, sid)
                         elif string.find(message,"fever"):
                             sid= diagnose.searchSymptom("fever", sender_id)
+                            send_message(sender_id, sid)
                         else:
                             sid = diagnose.searchSymptom("knee pain", sender_id)
-                        send_message(sender_id, sid)
+                            send_message(sender_id, sid)
                         print(sid,"=SID")
 
 
