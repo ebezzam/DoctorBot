@@ -66,7 +66,7 @@ def webhook():
                         global symptom_mode,symptom,gender,age
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
-                        elif symptom_mode:
+                        if symptom_mode:
                             # if not api_ai_filled(message):
                             #     response,symptom,gender,age = api_ai_analysis(message)
                             #     print response
