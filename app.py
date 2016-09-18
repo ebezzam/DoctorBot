@@ -60,6 +60,7 @@ def webhook():
                     
                     if message.get("text"): # get message
                         message = message["text"]
+                        print message
                         global symptom_mode
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
@@ -161,7 +162,6 @@ def api_ai_filled(message):
     request.query = message
     response = request.getresponse()
     data = json.loads(response.read())
-    print data
     # response = str(data["result"]["fulfillment"]["speech"])
     symptom = str(data["result"]["parameters"]["symptoms"])
     age = str(data["result"]["parameters"]["age"]["unit"])
