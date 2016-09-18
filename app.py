@@ -67,12 +67,11 @@ def webhook():
                         elif symptom_mode:
                         # elif True:
                             if not api_ai_filled(message):
-                                send_message(sender_id, "Getting user info")
                                 response,symptom,gender,age = api_ai_analysis(message)
                                 send_message(sender_id, response)
                             else:
                                 symptom_mode = False
-                            
+
                         else:
                             send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
@@ -149,9 +148,18 @@ def api_ai_analysis(message):
     data = json.loads(response.read())
     #print data
     response = str(data["result"]["fulfillment"]["speech"])
-    symptom = str(data["result"]["parameters"]["symptoms"])
-    age = str(data["result"]["parameters"]["age"]["unit"])
-    gender = str(data["result"]["parameters"]["sex"])
+    try:
+        symptom = str(data["result"]["parameters"]["symptoms"])
+    except:
+        symptom = ""
+    try:
+        age = str(data["result"]["parameters"]["age"]["unit"])
+    except:
+        age = ""
+    try:
+        gender = str(data["result"]["parameters"]["sex"])
+    except:
+        gender = ""
     return response,symptom,gender,age
 
 def api_ai_filled(message):
