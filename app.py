@@ -18,7 +18,7 @@ print(api.info())
 app = Flask(__name__)
 
 symptom_mode = False
-sympton = None
+symptom = None
 gender = None
 age = None
 
@@ -52,6 +52,7 @@ def webhook():
                     if message == 'In order to properly help you, I will need to ask you a few questions. What symptoms do you have?':
                         global symptom_mode
                         symptom_mode = True
+                        print('Activated symptom_mode')
                     # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
 
                 elif messaging_event.get("message"):  # someone sent us a message
@@ -89,6 +90,7 @@ def webhook():
                                 sid = diagnose.searchSymptom("knee pain", sender_id, gender)
                             send_message(sender_id, sid)
                             print(sid,"=SID")
+                            symptom_mode = False
 
                         # else:
                             
