@@ -75,11 +75,11 @@ def webhook():
 
                         if symptom is not None:
                             if string.find(message,"yes") is not -1 or string.find(message,"yeah") is not -1:
-                                diagnosis = improve_diagnosis(diagnosis,sender_id,symptom,"present")
+                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,"present")
                             elif string.find(message,"no") is not -1 or string.find(message,"nope") is not -1:
-                                diagnosis = improve_diagnosis(diagnosis,sender_id,symptom,"absent")
+                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,"absent")
                             else:
-                                diagnosis = improve_diagnosis(diagnosis,sender_id,symptom,"unknown")
+                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,"unknown")
                             send_message(sender_id, "I suspect "+str(diagnosis.conditions[0]["name"])+" with a probability of "+str(diagnosis.conditions[0]["probability"]))
                             send_message(sender_id, "Please send me your location so I can find a doctor near you")
 
