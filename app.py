@@ -68,9 +68,8 @@ def webhook():
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
                         else:
-                            print "Test global"
                             global sympton
-                            print sympton
+                            send_message(sender_id, sympton)
                             send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
