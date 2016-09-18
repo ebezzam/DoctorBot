@@ -69,7 +69,6 @@ def webhook():
                         else:
                             sid = diagnose.searchSymptom("knee pain", sender_id)
                             send_message(sender_id, sid)
-                        print(sid,"=SID")
 
 
                     # if message.get("text"): # get message
