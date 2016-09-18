@@ -18,6 +18,7 @@ app = Flask(__name__)
 symptom_mode = False
 sympton = None
 gender = None
+age = None
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -49,11 +50,10 @@ def webhook():
                     if message == 'In order to properly help you, I will \
                         need to ask you a few questions. What symptoms do you have?':
                         global symptom_mode
-                        symptom_mode = True 
-                        return redirect('/symptom') 
+                        symptom_mode = True
                     # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
 
-                if messaging_event.get("message"):  # someone sent us a message
+                elif messaging_event.get("message"):  # someone sent us a message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     # sort different types of messages
@@ -61,20 +61,23 @@ def webhook():
                     
                     if message.get("text"): # get message
                         message = message["text"]
-                        global symptom_mode
-                        if True:
-                            send_message(sender_id, "In Symptom Mode.")
-                            if symptom == None:
-                                symptom = api_ai_analysis(message)
-                            else:
-                                symptom_mode = False
-                                
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
-                        else:
+                        global symptom_mode,symptom,gender,age
+                        if symptom_mode:
+                            if not api_ai_filled(message):
+                                response,symptom,gender,age = api_ai_analysis(message)
+                                print response
+                                print symptom
+                                print gender
+                                print age
+                                send_message(sender_id, response)
+                            else:
+                                symptom_mode = False
+                        # else:
                             
-                            send_message(sender_id, sympton)
-                            send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
+                            #send_message(sender_id, sympton)
+                            #send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
@@ -147,10 +150,32 @@ def api_ai_analysis(message):
     request.query = message
     response = request.getresponse()
     data = json.loads(response.read())
+    #print data
+    response = str(data["result"]["fulfillment"]["speech"])
+    symptom = str(data["result"]["parameters"]["symptoms"])
+    age = str(data["result"]["parameters"]["age"]["unit"])
+    gender = str(data["result"]["parameters"]["sex"])
+    return response,symptom,gender,age
+
+def api_ai_filled(message):
+
+    CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
+    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+    request = ai.text_request()
+    request.lang = 'en'  # optional, default value equal 'en'
+    request.query = message
+    response = request.getresponse()
+    data = json.loads(response.read())
     print data
     # response = str(data["result"]["fulfillment"]["speech"])
-    symptom = str(data["result"]["parameter"]["symptoms"])
-    return symptom
+    symptom = str(data["result"]["parameters"]["symptoms"])
+    age = str(data["result"]["parameters"]["age"]["unit"])
+    gender = str(data["result"]["parameters"]["sex"])
+
+    if(gender!="" and age!="" and symptom!=""):
+        return True
+    else:
+        return False
 
 def send_message(sender_id, message_text):
 
