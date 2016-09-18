@@ -74,18 +74,21 @@ def webhook():
                             send_message(sender_id, "Give me a sec!")
 
                         if symptom is not None:
-                            if string.find(message,"yes") is not -1 or string.find(message,"yeah") is not -1:
-                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,"present")
-                            elif string.find(message,"no") is not -1 or string.find(message,"nope") is not -1:
-                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,"absent")
+                            if string.find(message,str(diagnosis.question.items[0]["choices"]["label"])) is not -1:
+                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,str(diagnosis.question.items[0]["choices"]["id"]))
+                            elif string.find(message,str(diagnosis.question.items[1]["choices"]["label"])) is not -1:
+                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,str(diagnosis.question.items[1]["choices"]["id"]))
                             else:
-                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,"unknown")
-                            if diagnosis.conditions[0]["probability"] > 0.5:
+                                diagnosis = diagnose.improve_diagnosis(diagnosis,sender_id,symptom,str(diagnosis.question.items[2]["choices"]["id"]))
+                            if diagnosis.conditions[0]["probability"] > 0.25:
                                 send_message(sender_id, "I suspect "+str(diagnosis.conditions[0]["name"])+" with a probability of "+str(diagnosis.conditions[0]["probability"]))
                                 send_message(sender_id, "Please send me your location so I can find a doctor near you")
                             else:
                                 symptom = str(diagnosis.question.items[0]["id"])
-                                send_message(sender_id, str(diagnosis.question.text))
+                                response = str(diagnosis.question.text)
+                                for x in diagnosis.question.items[0]["choices"]:
+                                    response = response + "\n - " + str(x["label"])
+                                send_message(sender_id, response)
 
 
                         global diagnosis, symptom
