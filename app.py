@@ -69,7 +69,7 @@ def webhook():
                         elif string.find(message,"fever") is not -1:
                             sid= diagnose.searchSymptom("fever", sender_id)
                             send_message(sender_id, "Give me a sec!")
-                        else string.find(message,"knee") is not -1:
+                        elif string.find(message,"knee") is not -1:
                             sid = diagnose.searchSymptom("knee pain", sender_id)
                             send_message(sender_id, "Give me a sec!")
 
