@@ -69,7 +69,7 @@ def webhook():
                     
                     if message.get("text"): # get message
                         message = message["text"]
-                        global system_mode
+                        global symptom_mode
                         if symptom_mode:
                             send_message(sender_id, "In Symptom Mode.")
                             if symptom == None:
