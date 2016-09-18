@@ -49,11 +49,6 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]
                     message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
-                    if message == 'In order to properly help you, I will need to ask you a few questions. What symptoms do you have?':
-                        global symptom_mode
-                        symptom_mode = True
-                        print('Activated symptom_mode')
-                    # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
 
                 elif messaging_event.get("message"):  # someone sent us a message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
@@ -66,36 +61,15 @@ def webhook():
                         global symptom_mode,symptom,gender,age
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
-                        print(symptom_mode)
-                        if symptom_mode:
-                            # if not api_ai_filled(message):
-                            #     response,symptom,gender,age = api_ai_analysis(message)
-                            #     print response
-                            #     print symptom
-                            #     print gender
-                            #     print age
-                            #     send_message(sender_id, response)
-                            # else:
-                            #     symptom_mode = False
-                            #try:
-                            #    gender = diagnose.gender(sender_id)
-                            #except:
-                            gender = "male"
-                            sid = 1
-                            if string.find(message,"headache"):
-                                sid = diagnose.searchSymptom("headache", sender_id, gender)
-                            elif string.find(message,"fever"):
-                                sid= diagnose.searchSymptom("fever", sender_id, gender)
-                            else:
-                                sid = diagnose.searchSymptom("knee pain", sender_id, gender)
-                            send_message(sender_id, sid)
-                            print(sid,"=SID")
-                            symptom_mode = False
+                        elif string.find(message,"headache"):
+                            sid = diagnose.searchSymptom("headache", sender_id)
+                        elif string.find(message,"fever"):
+                            sid= diagnose.searchSymptom("fever", sender_id)
+                        else:
+                            sid = diagnose.searchSymptom("knee pain", sender_id)
+                        send_message(sender_id, sid)
+                        print(sid,"=SID")
 
-                        # else:
-                            
-                        #     #send_message(sender_id, sympton)
-                        #     send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
