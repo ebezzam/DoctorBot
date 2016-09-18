@@ -70,6 +70,7 @@ def webhook():
                         else:
                             send_message(sender_id, "test")
                             global sympton
+                            sympton+=1
                             send_message(sender_id, sympton)
                             send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
