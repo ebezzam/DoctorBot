@@ -65,17 +65,31 @@ def webhook():
                             init_buttom_template(sender_id)
                         elif string.find(message,"headache") is not -1:
                             sid = diagnose.searchSymptom("headache", sender_id)
+                            send_message(sender_id, "Give me a sec!")
                         elif string.find(message,"fever") is not -1:
                             sid= diagnose.searchSymptom("fever", sender_id)
-                        else:
+                            send_message(sender_id, "Give me a sec!")
+                        else string.find(message,"knee") is not -1:
                             sid = diagnose.searchSymptom("knee pain", sender_id)
-                        send_message(sender_id, "Give me a sec!")
+                            send_message(sender_id, "Give me a sec!")
 
-                        global diagnosis
+                        if symptom is not None:
+                            if string.find(message,"yes") is not -1 or string.find(message,"yeah") is not -1:
+                                improve_diagnosis(diagnosis,sender_id,symptom,"present")
+                            elif string.find(message,"no") is not -1 or string.find(message,"nope") is not -1:
+                                improve_diagnosis(diagnosis,sender_id,symptom,"absent")
+                            else:
+                                improve_diagnosis(diagnosis,sender_id,symptom,"unknown")
+                        send_message(sender_id, "I suspect "+str(x.conditions[0]["name"])+" with a probability of "+str(x.conditions[0]["probability"]))
+                        send_message(sender_id, "Please send me your location so I can find a doctor near you")
+
+
+                        global diagnosis, symptom
                         if diagnosis is None and sid is not None:
                             diagnosis = diagnose.init_diagnose(sid,age,gender,sender_id)
-                            print diagnosis.question
-                            print"------------------------------------------------------"
+                            symptom = str(diagnosis.question.items[0]["id"])
+                            send_message(sender_id, str(diagnosis.question.text))
+                        
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
