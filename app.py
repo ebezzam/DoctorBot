@@ -65,13 +65,14 @@ def webhook():
                         global symptom_mode
                         if symptom_mode:
                             if not api_ai_filled(message):
-                                symptom = api_ai_analysis(message)
+                                response,symptom,gender,age = api_ai_analysis(message)
+                                send_message(sender_id, response)
                             else:
                                 symptom_mode = False
                         else:
                             
-                            send_message(sender_id, sympton)
-                            send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
+                            #send_message(sender_id, sympton)
+                            #send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
@@ -144,10 +145,12 @@ def api_ai_analysis(message):
     request.query = message
     response = request.getresponse()
     data = json.loads(response.read())
-    print data
-    # response = str(data["result"]["fulfillment"]["speech"])
+    #print data
+    response = str(data["result"]["fulfillment"]["speech"])
     symptom = str(data["result"]["parameters"]["symptoms"])
-    return symptom
+    age = str(data["result"]["parameters"]["age"]["unit"])
+    gender = str(data["result"]["parameters"]["sex"])
+    return response,symptom,gender,age
 
 def api_ai_filled(message):
 
