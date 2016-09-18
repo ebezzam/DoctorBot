@@ -10,6 +10,8 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+sympton = 3
+
 @app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
@@ -66,6 +68,8 @@ def webhook():
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
                         else:
+                            global sympton
+                            print sympton
                             send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
