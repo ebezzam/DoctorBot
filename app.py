@@ -70,7 +70,7 @@ def webhook():
                     if message.get("text"): # get message
                         message = message["text"]
                         global symptom_mode
-                        if symptom_mode:
+                        if True:
                             send_message(sender_id, "In Symptom Mode.")
                             if symptom == None:
                                 symptom = apiai_symptom(message)
