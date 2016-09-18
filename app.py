@@ -10,7 +10,9 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-sympton = 3
+symptom_mode = False
+sympton = None
+gender = None
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -53,7 +55,9 @@ def webhook():
                     message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
                     if message == 'In order to properly help you, I will \
-                        need to ask you a few questions. What symptoms do you have?': 
+                        need to ask you a few questions. What symptoms do you have?':
+                        global symptom_mode
+                        symptom_mode = True 
                         return redirect('/symptom') 
                     # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
 
@@ -65,12 +69,17 @@ def webhook():
                     
                     if message.get("text"): # get message
                         message = message["text"]
+                        global system_mode
+                        if symptom_mode:
+                            send_message(sender_id, "In Symptom Mode.")
+                            if symptom == None:
+                                symptom = apiai_symptom(message)
+                            else:
+                                symptom_mode = False
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
                         else:
-                            send_message(sender_id, "test")
-                            global sympton
-                            sympton+=1
+                            
                             send_message(sender_id, sympton)
                             send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
