@@ -76,17 +76,19 @@ def webhook():
                             #     send_message(sender_id, response)
                             # else:
                             #     symptom_mode = False
-                            try:
-                                gender = diagnose.gender(sender_id)
-                            except:
-                                gender = "male"
+                            #try:
+                            #    gender = diagnose.gender(sender_id)
+                            #except:
+                            gender = "male"
+                            sid = 1
                             if string.find(message,"headache"):
                                 sid = diagnose.searchSymptom("headache", sender_id, gender)
                             elif string.find(message,"fever"):
                                 sid= diagnose.searchSymptom("fever", sender_id, gender)
                             else:
-                                sid= diagnose.searchSymptom("knee pain", sender_id, gender)
+                                sid = diagnose.searchSymptom("knee pain", sender_id, gender)
                             send_message(sender_id, sid)
+                            print(sid,"=SID")
 
                         # else:
                             
