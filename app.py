@@ -68,6 +68,7 @@ def webhook():
                                 symptom = api_ai_analysis(message)
                             else:
                                 symptom_mode = False
+                                
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
                         else:
