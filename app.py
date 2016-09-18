@@ -62,15 +62,15 @@ def webhook():
                         message = message["text"]
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
-                        else:
-                            send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
                         global symptom_mode
-                        if symptom_mode:
+                        elif symptom_mode:
                             if not api_ai_filled(message):
                                 response,symptom,gender,age = api_ai_analysis(message)
                                 send_message(sender_id, response)
                             else:
                                 symptom_mode = False
+                        else:
+                            send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
