@@ -74,6 +74,7 @@ def webhook():
                         if diagnosis is None:
                             diagnosis = diagnose.init_diagnose(sid,age,gender,sender_id)
                             print diagnosis.question
+                            print"------------------------------------------------------"
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
