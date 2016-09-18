@@ -49,8 +49,7 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]
                     message = messaging_event["postback"]["payload"]
                     send_message(sender_id, message)
-                    if message == 'In order to properly help you, I will \
-                        need to ask you a few questions. What symptoms do you have?':
+                    if message == 'In order to properly help you, I will need to ask you a few questions. What symptoms do you have?':
                         global symptom_mode
                         symptom_mode = True
                     # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
@@ -66,7 +65,7 @@ def webhook():
                         global symptom_mode,symptom,gender,age
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
-                        send_message(sender_id,symptom_mode)
+                        print(symptom_mode)
                         if symptom_mode:
                             # if not api_ai_filled(message):
                             #     response,symptom,gender,age = api_ai_analysis(message)
