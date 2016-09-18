@@ -21,6 +21,7 @@ symptom_mode = False
 symptom = None
 gender = None
 age = None
+diagnosis = None
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -55,21 +56,24 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     # sort different types of messages
                     message = messaging_event["message"]
-                    
+                    gender = 'male'
+                    age = 20
                     if message.get("text"): # get message
                         message = message["text"]
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
                         elif string.find(message,"headache") is not -1:
                             sid = diagnose.searchSymptom("headache", sender_id)
-                            send_message(sender_id, sid)
                         elif string.find(message,"fever") is not -1:
                             sid= diagnose.searchSymptom("fever", sender_id)
-                            send_message(sender_id, sid)
                         else:
                             sid = diagnose.searchSymptom("knee pain", sender_id)
-                            send_message(sender_id, sid)
+                        send_message(sender_id, "Give me a sec!")
 
+                        global diagnosis
+                        if diagnosis is None:
+                            diagnosis = diagnose.init_diagnose(sid,age,gender,sender_id)
+                            print diagnosis.question
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
