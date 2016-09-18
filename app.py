@@ -69,7 +69,7 @@ def webhook():
                             init_buttom_template(sender_id)
                         else:
                             send_message(sender_id, "test")
-                            sympton
+                            sympton+=1
                             send_message(sender_id, sympton)
                             send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
