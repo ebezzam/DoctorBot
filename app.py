@@ -5,6 +5,8 @@ import json
 import requests
 import apiai
 import sqlite3
+import string
+import diagnose
 import urllib, json
 from flask import Flask, request
 
@@ -65,19 +67,30 @@ def webhook():
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
                         elif symptom_mode:
-                            if not api_ai_filled(message):
-                                response,symptom,gender,age = api_ai_analysis(message)
-                                print response
-                                print symptom
-                                print gender
-                                print age
-                                send_message(sender_id, response)
+                            # if not api_ai_filled(message):
+                            #     response,symptom,gender,age = api_ai_analysis(message)
+                            #     print response
+                            #     print symptom
+                            #     print gender
+                            #     print age
+                            #     send_message(sender_id, response)
+                            # else:
+                            #     symptom_mode = False
+                            try:
+                                gender = diagnose.gender(sender_id)
+                            except:
+                                gender = "male"
+                            if string.find(h,"headache"):
+                                diagnose.searchSymptom("headache", sender_id, gender)
+                            elif string.find(h,"fever"):
+                                diagnose.searchSymptom("fever", sender_id, gender)
                             else:
-                                symptom_mode = False
-                        else:
+                                diagnose.searchSymptom("knee pain", sender_id, gender)
+
+                        # else:
                             
-                            #send_message(sender_id, sympton)
-                            send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
+                        #     #send_message(sender_id, sympton)
+                        #     send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
 
                     # if message.get("text"): # get message
                     #     message = message["text"]
