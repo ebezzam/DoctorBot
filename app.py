@@ -53,7 +53,7 @@ def webhook():
                         symptom_mode = True
                     # elif message == 'Which diseases and/or symptoms would you like to check in your local area?':
 
-                if messaging_event.get("message"):  # someone sent us a message
+                elif messaging_event.get("message"):  # someone sent us a message
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     # sort different types of messages
@@ -67,6 +67,10 @@ def webhook():
                         if symptom_mode:
                             if not api_ai_filled(message):
                                 response,symptom,gender,age = api_ai_analysis(message)
+                                print response
+                                print symptom
+                                print gender
+                                print age
                                 send_message(sender_id, response)
                             else:
                                 symptom_mode = False
