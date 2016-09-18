@@ -60,10 +60,10 @@ def webhook():
                         message = message["text"]
                         if message == "DoctorBot":
                             init_buttom_template(sender_id)
-                        elif string.find(message,"headache"):
+                        elif string.find(message,"headache") is not -1:
                             sid = diagnose.searchSymptom("headache", sender_id)
                             send_message(sender_id, sid)
-                        elif string.find(message,"fever"):
+                        elif string.find(message,"fever") is not -1:
                             sid= diagnose.searchSymptom("fever", sender_id)
                             send_message(sender_id, sid)
                         else:
