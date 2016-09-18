@@ -70,7 +70,7 @@ def webhook():
                                 send_message(sender_id, response)
                             else:
                                 symptom_mode = False
-                        else:
+                        # else:
                             
                             #send_message(sender_id, sympton)
                             #send_message(sender_id, "For medical advice, enter 'DoctorBot'.")
