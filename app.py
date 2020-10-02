@@ -12,7 +12,10 @@ from flask import Flask, request
 
 import infermedica_api
 
-api = infermedica_api.API(app_id='21794b8d', app_key='81f5f69f0cc9d2defaa3c722c0e905bf')
+INFERMEDICA_KEY = None
+API_AI_KEY = None
+
+api = infermedica_api.API(app_id='21794b8d', app_key=INFERMEDICA_KEY)
 print(api.info())
 
 app = Flask(__name__)
@@ -163,7 +166,7 @@ def webhook():
 def api_ai_analysis(message):
 
     CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
-    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+    ai = apiai.ApiAI(API_AI_KEY)
     request = ai.text_request()
     request.lang = 'en'  # optional, default value equal 'en'
     request.query = message
@@ -179,7 +182,7 @@ def api_ai_analysis(message):
 def api_ai_filled(message):
 
     CLIENT_ACCESS_TOKEN = 'f2c3166a316843ca95e399a19333c873'
-    ai = apiai.ApiAI('31df623f4c1846209c287dc9e8f36a2e')
+    ai = apiai.ApiAI(API_AI_KEY)
     request = ai.text_request()
     request.lang = 'en'  # optional, default value equal 'en'
     request.query = message
